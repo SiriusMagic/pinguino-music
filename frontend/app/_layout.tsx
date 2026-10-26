@@ -30,7 +30,7 @@ export default function RootLayout() {
       <SafeAreaProvider>
         <LanguageProvider>
           <AudioProvider>
-            <StatusBar barStyle="light-content" backgroundColor="#0A0A0E" />
+            <StatusBar barStyle="light-content" />
             <Stack
               screenOptions={{
                 headerShown: false,

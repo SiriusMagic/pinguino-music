@@ -9,24 +9,56 @@ Aplicación móvil de **reproducción de música** con una mascota pingüino, he
 - **Escaneo de carpetas**: simula la búsqueda de canciones y carga una biblioteca de demostración con 10 temas libres de derechos.
 - **Reproductor**: mini reproductor flotante y pantalla completa con portada, barra de progreso, anterior/siguiente, aleatorio y repetición (desactivado → todas → una).
 
-> ℹ️ Estado actual: usa canciones de demostración en línea. El escaneo real de archivos del teléfono y la reproducción en segundo plano están pendientes.
+> ✅ **Funciona sin servidor ni base de datos.** Corre en el navegador, en Expo Go o como APK.
+>
+> ℹ️ Usa canciones de demostración en línea. El escaneo real de archivos del teléfono y la reproducción en segundo plano están pendientes.
 
 ## Tecnología
 
-- **App**: Expo + React Native + TypeScript, con `expo-router` y `expo-audio`
-- **Backend**: FastAPI (Python), por ahora solo con rutas de prueba
+- **Expo SDK 58** + **React Native 0.88** + **TypeScript**
+- `expo-router` para la navegación y `expo-audio` para el sonido
+- Sin backend: el idioma y el progreso se guardan en el dispositivo (AsyncStorage)
 
-## Cómo ejecutarlo
+## Cómo usarla
 
-Requisitos: **Node.js 20+** y la app **Expo Go** en tu teléfono (o un emulador Android).
+Requisitos: **Node.js 20 o superior** y **Yarn**.
 
 ```bash
 cd frontend
 yarn install
-yarn start        # escanea el código QR con Expo Go
+yarn web          # abre la app en el navegador
+yarn start        # escanea el código QR con la app Expo Go del celular
 yarn android      # abre en un emulador Android
-yarn web          # abre en el navegador
 ```
+
+### Versión web para publicar
+
+```bash
+cd frontend
+yarn build:web    # genera la carpeta frontend/dist
+npx serve dist    # pruébala en http://localhost:3000
+```
+
+El workflow `.github/workflows/pages.yml` compila la versión web en cada pull request y la publica en GitHub Pages en cada cambio a `main`. GitHub Pages solo está disponible en repos **públicos** con el plan gratuito.
+
+### Compartirla desde tu computadora con un túnel
+
+Con `yarn web` corriendo, en otra terminal:
+
+```bash
+npx cloudflared tunnel --url http://localhost:8081
+```
+
+Te dará un enlace `https://….trycloudflare.com` para abrirla desde cualquier dispositivo.
+
+### Generar el APK de Android
+
+```bash
+cd frontend
+npx eas-cli build -p android --profile preview
+```
+
+Necesitas una cuenta gratuita de Expo.
 
 ## Licencia
 
