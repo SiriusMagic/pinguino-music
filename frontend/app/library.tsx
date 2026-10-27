@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useRef } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   View,
   Text,
@@ -54,7 +54,7 @@ export default function LibraryScreen() {
   const [langModal, setLangModal] = useState(false);
   const [scanProgress, setScanProgress] = useState(0);
 
-  const spinAnim = useRef(new Animated.Value(0)).current;
+  const [spinAnim] = useState(() => new Animated.Value(0));
 
   // Restore scanned + tracks
   useEffect(() => {
