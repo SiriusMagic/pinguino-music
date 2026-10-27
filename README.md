@@ -60,6 +60,16 @@ npx eas-cli build -p android --profile preview
 
 Necesitas una cuenta gratuita de Expo.
 
+## Pruebas
+
+```bash
+cd frontend
+yarn typecheck   # revisión de tipos
+yarn test:e2e    # en Chromium: idioma → bienvenida → escanear → reproducir "Crystal Cave"
+```
+
+GitHub las ejecuta en cada cambio. Las actualizaciones menores de Dependabot se fusionan solas cuando las pruebas pasan.
+
 ## Seguridad de dependencias
 
 - `package.json` fuerza `postcss` a una versión sin fallos (`resolutions`), porque Expo trae una antigua.
