@@ -23,4 +23,4 @@ npx expo install --fix   # alinear versiones con el SDK de Expo
 - **Probar antes de subir**: ejecuta las pruebas del repo; si cambia la interfaz, pruébala en un navegador.
 - **Idioma**: README, PRs y comentarios para el usuario en español, claros y sin jerga.
 - **Dependabot**: las actualizaciones menores se fusionan solas si las pruebas pasan; las mayores se revisan a mano.
-- **Expo**: actualiza paquetes con `npx expo install` (no con `yarn add`) para que coincidan con el SDK; revisa `npx expo-doctor`.
+- **Expo**: actualiza paquetes con `npx expo install` (no con `yarn add`) para que coincidan con el SDK; revisa `npx expo-doctor`. Dependabot ignora los paquetes de Expo/React Native a propósito (ver `.github/dependabot.yml`).

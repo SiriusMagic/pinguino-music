@@ -73,6 +73,7 @@ GitHub las ejecuta en cada cambio. Las actualizaciones menores de Dependabot se 
 ## Seguridad de dependencias
 
 - `package.json` fuerza `postcss` a una versión sin fallos (`resolutions`), porque Expo trae una antigua.
+- Dependabot **no** actualiza los paquetes de Expo y React Native: Expo exige versiones exactas para cada SDK. Para ponerlos al día: `npx expo install --fix`.
 - Quedan avisos en `zod` y `node-forge`, que usa solo la herramienta de línea de comandos de Expo (no van dentro de la app). No tienen arreglo compatible todavía; se resolverán cuando Expo los actualice.
 
 ## Licencia

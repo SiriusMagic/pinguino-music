@@ -11,7 +11,7 @@ export default defineConfig({
   },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"], viewport: { width: 400, height: 860 } } }],
   webServer: {
-    command: "yarn build:web && yarn serve -s dist -l 4173 --no-clipboard",
+    command: "yarn build:web && node e2e/servidor.mjs",
     url: "http://localhost:4173/",
     reuseExistingServer: !process.env.CI,
     timeout: 300_000,
