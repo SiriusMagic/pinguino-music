@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useMemo, useState } from "react";
 import {
   View,
   Text,
@@ -34,37 +34,34 @@ export default function PlayerScreen() {
 
   const [barWidth, setBarWidth] = useState(1);
   const [isDragging, setIsDragging] = useState(false);
-  const dragPos = useRef(0);
   const [previewMs, setPreviewMs] = useState(0);
 
   const dur = durationMs || current?.durationMs || 0;
   const pos = isDragging ? previewMs : positionMs;
   const progress = dur > 0 ? Math.min(1, Math.max(0, pos / dur)) : 0;
 
-  const panResponder = useRef(
-    PanResponder.create({
+  // El gesto se rehace solo si cambia el ancho de la barra, la duración o seekMs,
+  // así nunca usa valores viejos (antes se creaba una vez y quedaba con ancho 1).
+  const panResponder = useMemo(() => {
+    // Posición del dedo sobre la barra → milisegundos de la canción.
+    const toMs = (x: number) =>
+      Math.max(0, Math.min(1, x / Math.max(1, barWidth))) * (dur || 1);
+    return PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
       onPanResponderGrant: (e) => {
         setIsDragging(true);
-        const x = e.nativeEvent.locationX;
-        const p = Math.max(0, Math.min(1, x / Math.max(1, barWidth)));
-        dragPos.current = p;
-        setPreviewMs(p * (dur || 1));
+        setPreviewMs(toMs(e.nativeEvent.locationX));
       },
       onPanResponderMove: (e) => {
-        const x = Math.max(0, Math.min(barWidth, e.nativeEvent.locationX));
-        const p = x / Math.max(1, barWidth);
-        dragPos.current = p;
-        setPreviewMs(p * (dur || 1));
+        setPreviewMs(toMs(e.nativeEvent.locationX));
       },
-      onPanResponderRelease: () => {
-        const ms = dragPos.current * (dur || 1);
-        seekMs(ms);
+      onPanResponderRelease: (e) => {
+        seekMs(toMs(e.nativeEvent.locationX));
         setTimeout(() => setIsDragging(false), 100);
       },
-    })
-  ).current;
+    });
+  }, [barWidth, dur, seekMs]);
 
   if (!current) {
     return (
