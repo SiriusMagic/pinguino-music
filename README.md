@@ -60,6 +60,11 @@ npx eas-cli build -p android --profile preview
 
 Necesitas una cuenta gratuita de Expo.
 
+## Seguridad de dependencias
+
+- `package.json` fuerza `postcss` a una versión sin fallos (`resolutions`), porque Expo trae una antigua.
+- Quedan avisos en `zod` y `node-forge`, que usa solo la herramienta de línea de comandos de Expo (no van dentro de la app). No tienen arreglo compatible todavía; se resolverán cuando Expo los actualice.
+
 ## Licencia
 
 Copyright 2026 SiriusMagic
